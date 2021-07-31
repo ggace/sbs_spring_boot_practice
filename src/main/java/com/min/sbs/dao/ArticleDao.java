@@ -1,4 +1,4 @@
-package com.min.sbs.repository;
+package com.min.sbs.dao;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import com.min.sbs.dto.Article;
 
 @Mapper
-public interface ArticleRepository {
+public interface ArticleDao {
 
 	public List<Article> getArticles();
 

@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.min.sbs.dao.ArticleDao;
 import com.min.sbs.dto.Article;
-import com.min.sbs.repository.ArticleRepository;
 
 @Service
 public class ArticleService {
 
-	private ArticleRepository articleRepository;
+	private ArticleDao articleRepository;
 
-	public ArticleService(ArticleRepository articleRepository) {
+	public ArticleService(ArticleDao articleRepository) {
 		this.articleRepository = articleRepository;
 	}
 

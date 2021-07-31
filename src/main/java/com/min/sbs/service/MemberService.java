@@ -2,14 +2,14 @@ package com.min.sbs.service;
 
 import org.springframework.stereotype.Service;
 
+import com.min.sbs.dao.MemberDao;
 import com.min.sbs.dto.Member;
-import com.min.sbs.repository.MemberRepository;
 
 @Service
 public class MemberService {
-	private MemberRepository memberRepository;
+	private MemberDao memberRepository;
 
-	public MemberService(MemberRepository memberRepository) {
+	public MemberService(MemberDao memberRepository) {
 		this.memberRepository = memberRepository;
 	}
 
