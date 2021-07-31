@@ -26,7 +26,7 @@ public class ArticleService {
 
 	public Article doAdd(String title, String body) {
 		articleRepository.addArticle(title, body);
-		
+
 		return articleRepository.getLastArticle();
 	}
 
@@ -37,7 +37,7 @@ public class ArticleService {
 		if (article == null) {
 			return id + "번 글은 존재하지 않습니다.";
 		}
-		
+
 		articleRepository.deleteArticle(id);
 
 		return id + "번 글이 삭제되었습니다.";
@@ -49,9 +49,9 @@ public class ArticleService {
 		if (article == null) {
 			return id + "번 글은 존재하지 않습니다.";
 		}
-		
+
 		articleRepository.modifyArticle(id, title, body);
-		
+
 		return id + "번 글을 수정하였습니다.";
 	}
 

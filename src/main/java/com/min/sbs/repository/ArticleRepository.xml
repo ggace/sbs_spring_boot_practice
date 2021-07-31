@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper
-	namespace="com.min.sbs.repository.ArticleRepository">
-	
+<mapper namespace="com.min.sbs.repository.ArticleRepository">
+
 	<select id="getArticles" resultType="Article">
 		SELECT *
 		FROM article
 	</select>
-	
+
 	<select id="getArticle" resultType="Article">
 		SELECT *
 		FROM article
 		WHERE id=#{id}
 	</select>
-	
+
 	<select id="getLastArticle" resultType="Article">
 		SELECT *
 		FROM article
 		ORDER BY id DESC
 		LIMIT 1
 	</select>
-	
+
 	<insert id="addArticle">
 		INSERT INTO article
-		SET 
-			title=#{title},
-			body=#{body}, 
-			regDate=Now(), 
-			updateDate=NOW()
+		SET title=#{title},
+		body=#{body},
+		regDate=Now(),
+		updateDate=NOW()
 	</insert>
-	
+
 	<delete id="deleteArticle">
 		DELETE FROM article
 		WHERE id=#{id}
 	</delete>
-	
+
 	<update id="modifyArticle">
 		UPDATE article
 		<set>
@@ -46,8 +44,8 @@
 				body=#{body},
 			</if>
 			updateDate = NOW()
-		</set> 
+		</set>
 		WHERE id=#{id}
 	</update>
-	
+
 </mapper>
