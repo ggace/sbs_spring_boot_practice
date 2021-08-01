@@ -21,14 +21,14 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
-	public ResultData getArticles() {
+	public ResultData<List<Article>> getArticles() {
 		List<Article> articles = articleService.getArticles();
 		return ResultData.from("S-1", "게시물 리스트 입니다.", articles);
 	}
 
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public ResultData getArticle(Integer id) {
+	public ResultData<Article> getArticle(Integer id) {
 		if(id == null) {
 			return ResultData.from("F-A", "id를 입력해주세요");
 		}
@@ -41,21 +41,21 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public ResultData doAdd(String title, String body) {
+	public ResultData<Article> doAdd(String title, String body) {
 		if(Util.isEmpty(title)) {
 			return ResultData.from("F-A", "title를 입력해주세요");
 		}
 		if(Util.isEmpty(body)) {
 			return ResultData.from("F-B", "body를 입력해주세요");
 		}
-		ResultData addRd = articleService.doAdd(title, body);
-		int id = (int)addRd.getData();
+		ResultData<Integer> addRd = articleService.doAdd(title, body);
+		int id = addRd.getData();
 		return ResultData.newData(addRd, articleService.getArticle(id));
 	}
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public ResultData doDelete(Integer id) {
+	public ResultData<Integer> doDelete(Integer id) {
 		if(id == null) {
 			return ResultData.from("F-A", "id를 입력해주세요");
 		}
@@ -72,7 +72,7 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(Integer id, String title, String body) {
+	public ResultData<Article> doModify(Integer id, String title, String body) {
 		if(id == null) {
 			return ResultData.from("F-A", "id를 입력해주세요");
 		}

@@ -35,7 +35,7 @@ public class ResultData<DataType> {
 		return from(resultCode, msg, null);
 	}
 
-	public static <DataType> ResultData<DataType> newData(ResultData<DataType> rd, DataType obj) {
+	public static <DataType> ResultData<DataType> newData(ResultData rd, DataType obj) {
 		return from(rd.resultCode, rd.msg, obj);
 	}
 }
