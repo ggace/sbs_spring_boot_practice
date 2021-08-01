@@ -7,7 +7,7 @@ public class Util {
 			return true;
 		}
 
-		if (obj instanceof String) {
+		if (!(obj instanceof String)) {
 			return true;
 		}
 

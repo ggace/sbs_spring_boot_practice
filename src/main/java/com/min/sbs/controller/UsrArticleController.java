@@ -72,16 +72,27 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(Integer id, String title, String body) {
+	public ResultData doModify(Integer id, String title, String body) {
 		if(id == null) {
-			return "id를 입력해주세요";
+			return ResultData.from("F-A", "id를 입력해주세요");
 		}
 		if(Util.isEmpty(title)) {
-			return "title를 입력해주세요";
+			return ResultData.from("F-B", "title를 입력해주세요");
 		}
 		if(Util.isEmpty(body)) {
-			return "body를 입력해주세요";
+			return ResultData.from("F-C", "body를 입력해주세요");
 		}
-		return articleService.doModify(id, title, body);
+		
+		Article article = articleService.getArticle(id);
+
+		if (article == null) {
+			return ResultData.from("F-C", Util.format("%s번 글은 존재하지 않습니다.", id));
+		}
+		
+		articleService.doModify(id, title, body);
+		
+		article = articleService.getArticle(id);
+		
+		return ResultData.from("F-C", Util.format("%s번 글을 수정하였습니다.", id), article);
 	}
 }

@@ -33,21 +33,11 @@ public class ArticleService {
 	}
 
 	public void doDelete(int id) {
-
 		articleDao.deleteArticle(id);
-
 	}
 
-	public String doModify(int id, String title, String body) {
-		Article article = getArticle(id);
-
-		if (article == null) {
-			return id + "번 글은 존재하지 않습니다.";
-		}
-
+	public void doModify(int id, String title, String body) {
 		articleDao.modifyArticle(id, title, body);
-
-		return id + "번 글을 수정하였습니다.";
 	}
 
 }
