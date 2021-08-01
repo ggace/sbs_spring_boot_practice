@@ -27,7 +27,10 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/getArticle")
 	@ResponseBody
-	public ResultData getArticle(int id) {
+	public ResultData getArticle(Integer id) {
+		if(id == null) {
+			return ResultData.from("F-A", "id를 입력해주세요");
+		}
 		Article article = articleService.getArticle(id);
 		if(article == null) {
 			return ResultData.from("F-1", Util.format("%s번 게시물은 존재하지 않습니다.", id));
@@ -38,6 +41,12 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public ResultData doAdd(String title, String body) {
+		if(Util.isEmpty(title)) {
+			return ResultData.from("F-A", "title를 입력해주세요");
+		}
+		if(Util.isEmpty(body)) {
+			return ResultData.from("F-B", "body를 입력해주세요");
+		}
 		ResultData addRd = articleService.doAdd(title, body);
 		int id = (int)addRd.getData();
 		return ResultData.newData(addRd, articleService.getArticle(id));
@@ -45,13 +54,25 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(int id) {
+	public String doDelete(Integer id) {
+		if(id == null) {
+			return "id를 입력해주세요";
+		}
 		return articleService.doDelete(id);
 	}
 
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public String doModify(Integer id, String title, String body) {
+		if(id == null) {
+			return "id를 입력해주세요";
+		}
+		if(Util.isEmpty(title)) {
+			return "title를 입력해주세요";
+		}
+		if(Util.isEmpty(body)) {
+			return "body를 입력해주세요";
+		}
 		return articleService.doModify(id, title, body);
 	}
 }
