@@ -26,8 +26,8 @@ public class ArticleService {
 		return articleDao.getArticle(id);
 	}
 
-	public ResultData<Integer> doAdd(String title, String body) {
-		articleDao.addArticle(title, body);
+	public ResultData<Integer> doAdd(int memberId, String title, String body) {
+		articleDao.addArticle(memberId, title, body);
 		int id = articleDao.getLastArticleId();
 		return ResultData.from("S-1", Util.format("%s번 게시물이 추가되었습니다.", id), id);
 	}

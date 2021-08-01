@@ -20,7 +20,7 @@ public interface ArticleDao {
 
 	public int getLastArticleId();
 
-	public void addArticle(@Param("title") String title, @Param("body") String body);
+	public void addArticle(@Param("memberId") int memberId, @Param("title") String title, @Param("body") String body);
 
 	public void deleteArticle(@Param("id") int id);
 
