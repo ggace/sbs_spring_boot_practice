@@ -37,8 +37,10 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
-	public Article doAdd(String title, String body) {
-		return articleService.doAdd(title, body);
+	public ResultData doAdd(String title, String body) {
+		ResultData addRd = articleService.doAdd(title, body);
+		int id = (int)addRd.getData();
+		return ResultData.newData(addRd, articleService.getArticle(id));
 	}
 
 	@RequestMapping("/usr/article/doDelete")

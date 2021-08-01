@@ -7,32 +7,32 @@ import com.min.sbs.dto.Member;
 
 @Service
 public class MemberService {
-	private MemberDao memberRepository;
+	private MemberDao memberDao;
 
 	public MemberService(MemberDao memberRepository) {
-		this.memberRepository = memberRepository;
+		this.memberDao = memberRepository;
 	}
 
 	public int join(String loginId, String loginPw, String name, String nickname, String cellphoneNo, String email) {
 
-		Member oldMember = memberRepository.getMemberByLoginId(loginId);
+		Member oldMember = memberDao.getMemberByLoginId(loginId);
 
 		if (oldMember != null) {
 			return -1;
 		}
-		oldMember = memberRepository.getMemberByNameAndEmail(name, email);
+		oldMember = memberDao.getMemberByNameAndEmail(name, email);
 
 		if (oldMember != null) {
 			return -2;
 		}
 
-		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNo, email);
+		memberDao.join(loginId, loginPw, name, nickname, cellphoneNo, email);
 
-		return memberRepository.getLastId();
+		return memberDao.getLastId();
 	}
 
 	public Member getMemberById(int id) {
-		return memberRepository.getMemberById(id);
+		return memberDao.getMemberById(id);
 	}
 
 }

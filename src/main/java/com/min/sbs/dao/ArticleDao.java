@@ -18,7 +18,7 @@ public interface ArticleDao {
 
 	public Article getArticle(@Param("id") int id);
 
-	public Article getLastArticle();
+	public int getLastArticleId();
 
 	public void addArticle(@Param("title") String title, @Param("body") String body);
 

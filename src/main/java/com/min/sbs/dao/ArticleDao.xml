@@ -14,11 +14,8 @@
 		WHERE id=#{id}
 	</select>
 
-	<select id="getLastArticle" resultType="Article">
-		SELECT *
-		FROM article
-		ORDER BY id DESC
-		LIMIT 1
+	<select id="getLastArticleId" resultType="int">
+		SELECT LAST_INSERT_ID();
 	</select>
 
 	<insert id="addArticle">
