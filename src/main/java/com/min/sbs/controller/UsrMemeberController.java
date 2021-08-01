@@ -52,11 +52,33 @@ public class UsrMemeberController {
 			return (ResultData)joinRd;
 		}
 		
-		int id = (int)joinRd.getData();
+		int id = joinRd.getData();
 		
 		Member member = memberService.getMemberById(id);
 
 		return ResultData.newData(joinRd, member);
+	}
+	
+	@RequestMapping("/usr/member/doLogin")
+	@ResponseBody
+	public ResultData doLogin(String loginId, String loginPw) {
+		if (Util.isEmpty(loginId)) {
+			return ResultData.from("F-A", "loginId를 입력해주세요");
+		}
 
+		if (Util.isEmpty(loginPw)) {
+			return ResultData.from("F-B", "loginPw를 입력해주세요");
+		}
+		
+		Member member = memberService.getMemberByLoginId(loginId);
+		
+		if(member == null) {
+			return ResultData.from("F-1", "해당 회원이 존재하지 않습니다.");
+		}
+		if(!(member.getLoginPw().equals(loginPw))) {
+			return ResultData.from("F-2", "비밀번호가 일치하지 않습니다.");
+		}
+		
+		return ResultData.from("S-1", Util.format("%s님 환영합니다.", loginId), member.getId());
 	}
 }

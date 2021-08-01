@@ -93,6 +93,6 @@ public class UsrArticleController {
 		
 		article = articleService.getArticle(id);
 		
-		return ResultData.from("F-C", Util.format("%s번 글을 수정하였습니다.", id), article);
+		return ResultData.from("S-1", Util.format("%s번 글을 수정하였습니다.", id), article);
 	}
 }
