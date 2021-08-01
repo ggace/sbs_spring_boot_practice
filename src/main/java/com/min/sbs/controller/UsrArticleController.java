@@ -36,7 +36,7 @@ public class UsrArticleController {
 		if(article == null) {
 			return ResultData.from("F-1", Util.format("%s번 게시물은 존재하지 않습니다.", id));
 		}
-		return ResultData.from("S-", Util.format("%s번 게시물입니다.", id), article); 
+		return ResultData.from("S-1", Util.format("%s번 게시물입니다.", id), article); 
 	}
 
 	@RequestMapping("/usr/article/doAdd")
@@ -55,11 +55,19 @@ public class UsrArticleController {
 
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
-	public String doDelete(Integer id) {
+	public ResultData doDelete(Integer id) {
 		if(id == null) {
-			return "id를 입력해주세요";
+			return ResultData.from("F-A", "id를 입력해주세요");
 		}
-		return articleService.doDelete(id);
+		
+		Article article = articleService.getArticle(id);
+
+		if (article == null) {
+			return ResultData.from("F-1", Util.format("%s번 글은 존재하지 않습니다.", id));
+		}
+		
+		articleService.doDelete(id);
+		return ResultData.from("S-1", Util.format("%s번 글이 삭제되었습니다.", id), id);
 	}
 
 	@RequestMapping("/usr/article/doModify")

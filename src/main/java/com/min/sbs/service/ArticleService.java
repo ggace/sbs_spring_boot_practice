@@ -32,17 +32,10 @@ public class ArticleService {
 		return ResultData.from("S-1", Util.format("%s번 게시물이 추가되었습니다.", id), id);
 	}
 
-	public String doDelete(int id) {
-
-		Article article = getArticle(id);
-
-		if (article == null) {
-			return id + "번 글은 존재하지 않습니다.";
-		}
+	public void doDelete(int id) {
 
 		articleDao.deleteArticle(id);
 
-		return id + "번 글이 삭제되었습니다.";
 	}
 
 	public String doModify(int id, String title, String body) {
