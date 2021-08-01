@@ -1,5 +1,7 @@
 package com.min.sbs.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,7 +63,7 @@ public class UsrMemeberController {
 	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public ResultData doLogin(String loginId, String loginPw) {
+	public ResultData doLogin(String loginId, String loginPw, HttpSession session) {
 		if (Util.isEmpty(loginId)) {
 			return ResultData.from("F-A", "loginId를 입력해주세요");
 		}
@@ -73,12 +75,15 @@ public class UsrMemeberController {
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if(member == null) {
+			session.setAttribute("loginedMemberId ", null);
 			return ResultData.from("F-1", "해당 회원이 존재하지 않습니다.");
 		}
 		if(!(member.getLoginPw().equals(loginPw))) {
+			session.setAttribute("loginedMemberId ", null);
 			return ResultData.from("F-2", "비밀번호가 일치하지 않습니다.");
 		}
 		
+		session.setAttribute("loginedMemberId ", member.getId());
 		return ResultData.from("S-1", Util.format("%s님 환영합니다.", loginId), member.getId());
 	}
 }
