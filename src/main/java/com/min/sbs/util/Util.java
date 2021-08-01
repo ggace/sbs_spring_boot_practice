@@ -21,7 +21,7 @@ public class Util {
 
 	}
 
-	public static String format(String string, String... args) {
+	public static String format(String string, Object... args) {
 		return String.format(string, args);
 	}
 
