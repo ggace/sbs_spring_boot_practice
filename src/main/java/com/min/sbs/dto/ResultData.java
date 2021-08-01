@@ -2,20 +2,20 @@ package com.min.sbs.dto;
 
 import lombok.Getter;
 
-public class ResultData {
+public class ResultData<DataType> {
 	@Getter
 	private String resultCode;
 	@Getter
 	private String msg;
 	@Getter
-	private Object data;
+	private DataType data;
 
 	private ResultData() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public static ResultData from(String resultCode, String msg, Object data) {
-		ResultData resultData = new ResultData();
+	public static <DataType> ResultData<DataType> from(String resultCode, String msg, DataType data) {
+		ResultData<DataType> resultData = new ResultData<>();
 		resultData.resultCode = resultCode;
 		resultData.msg = msg;
 		resultData.data = data;
@@ -31,11 +31,11 @@ public class ResultData {
 		return !isSuccess();
 	}
 
-	public static ResultData from(String resultCode, String msg) {
+	public static <DataType> ResultData<DataType> from(String resultCode, String msg) {
 		return from(resultCode, msg, null);
 	}
 
-	public static ResultData newData(ResultData rd, Object obj) {
+	public static <DataType> ResultData<DataType> newData(ResultData<DataType> rd, DataType obj) {
 		return from(rd.resultCode, rd.msg, obj);
 	}
 }
