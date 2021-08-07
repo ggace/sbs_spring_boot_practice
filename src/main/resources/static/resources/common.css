@@ -27,8 +27,9 @@ html body {
   width:100%;
 }
 
-.table-box-type-1 > table :is(th, td){
-  border:1px solid black;
+.table-box-type-1 > table th,
+.table-box-type-1 > table td{
+  border:1px solid gray;
   padding:10px;
 } 
 
@@ -51,7 +52,5 @@ html body {
 } 
 
 .div-table-type-1 p:first-of-type{
-	display: flex;
-	align-items: center;
 	border-right: 1px solid gray;
 }
