@@ -34,7 +34,7 @@ html body {
 
 .div-table-type-1 p{
 	padding: 10px;
-	border: 1px solid black;
+	border-bottom: 1px solid gray;
 }
 
 .div-table-type-1 div{
@@ -43,7 +43,15 @@ html body {
 	grid-template-columns: 80px 1fr;
 } 
 
+.div-table-type-1 div:first-of-type{
+	margin: 0px;
+	display: grid;
+	grid-template-columns: 80px 1fr;
+	border-top: 1px solid gray;
+} 
+
 .div-table-type-1 p:first-of-type{
 	display: flex;
 	align-items: center;
+	border-right: 1px solid gray;
 }
