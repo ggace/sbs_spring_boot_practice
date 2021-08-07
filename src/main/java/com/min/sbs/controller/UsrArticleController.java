@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,12 +21,21 @@ public class UsrArticleController {
 	public UsrArticleController(ArticleService articleService) {
 		this.articleService = articleService;
 	}
-
+	
 	@RequestMapping("/usr/article/getArticles")
 	@ResponseBody
 	public ResultData<List<Article>> getArticles() {
 		List<Article> articles = articleService.getArticles();
-		return ResultData.from("S-1", "게시물 리스트 입니다.", articles);
+		return ResultData.from("S-1", "게시물 리스트 입니다.", "artcicles", articles);
+	}
+	
+	@RequestMapping("/usr/article/list")
+	public String showList(Model model) {
+		
+		List<Article> articles = articleService.getArticles();
+		
+		model.addAttribute("articles", articles);
+		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/getArticle")
@@ -42,7 +52,25 @@ public class UsrArticleController {
 			return ResultData.from("F-1", Util.format("%s번 게시물은 존재하지 않습니다.", id));
 		}
 
-		return ResultData.from("S-1", Util.format("%s번 게시물입니다.", id), article);
+		return ResultData.from("S-1", Util.format("%s번 게시물입니다.", id), "article", article);
+	}
+	
+	@RequestMapping("/usr/article/detail")
+	public String showDetail(Integer id, Model model) {
+
+		if (id == null) {
+			model.addAttribute("errors", "id를 입력해주세요");
+			return "usr/article/detail";
+		}
+
+		Article article = articleService.getArticle(id);
+
+		if (article == null) {
+			model.addAttribute("errors", Util.format("%s번 게시물은 존재하지 않습니다.", id));
+			return "usr/article/detail";
+		}
+		model.addAttribute("article", article);
+		return "usr/article/detail";
 	}
 
 	@RequestMapping("/usr/article/doAdd")
@@ -65,7 +93,7 @@ public class UsrArticleController {
 		ResultData<Integer> addRd = articleService.doAdd(memberId, title, body);
 		int id = addRd.getData();
 
-		return ResultData.newData(addRd, articleService.getArticle(id));
+		return ResultData.newData(addRd, "article", articleService.getArticle(id));
 	}
 
 	@RequestMapping("/usr/article/doDelete")
@@ -94,7 +122,7 @@ public class UsrArticleController {
 
 		articleService.doDelete(id);
 
-		return ResultData.from("S-1", Util.format("%s번 글이 삭제되었습니다.", id), id);
+		return ResultData.from("S-1", Util.format("%s번 글이 삭제되었습니다.", id), "id", id);
 	}
 
 	@RequestMapping("/usr/article/doModify")
@@ -127,10 +155,10 @@ public class UsrArticleController {
 			return ResultData.from("F-b", "권한이 없습니다.");
 		}
 
-		articleService.doModify(id, title, body);
+		article = articleService.doModify(id, title, body);
 
-		article = articleService.getArticle(id);
+		
 
-		return ResultData.from("S-1", Util.format("%s번 글을 수정하였습니다.", id), article);
+		return ResultData.from("S-1", Util.format("%s번 글을 수정하였습니다.", id), "article", article);
 	}
 }

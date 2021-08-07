@@ -32,7 +32,7 @@ public class MemberService {
 
 		memberDao.join(loginId, loginPw, name, nickname, cellphoneNo, email);
 
-		return ResultData.from("S-1", "회원 가입되었습니다.", memberDao.getLastId());
+		return ResultData.from("S-1", "회원 가입되었습니다.", "id", memberDao.getLastId());
 	}
 
 	public Member getMemberById(int id) {

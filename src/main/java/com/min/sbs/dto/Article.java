@@ -1,7 +1,5 @@
 package com.min.sbs.dto;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Article {
 	int id;
-	Date regDate;
-	Date updateDate;
+	String regDate;
+	String updateDate;
 	int memberId;
 	String title;
 	String body;

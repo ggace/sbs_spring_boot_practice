@@ -29,15 +29,17 @@ public class ArticleService {
 	public ResultData<Integer> doAdd(int memberId, String title, String body) {
 		articleDao.addArticle(memberId, title, body);
 		int id = articleDao.getLastArticleId();
-		return ResultData.from("S-1", Util.format("%s번 게시물이 추가되었습니다.", id), id);
+		return ResultData.from("S-1", Util.format("%s번 게시물이 추가되었습니다.", id), "id", id);
 	}
 
 	public void doDelete(int id) {
 		articleDao.deleteArticle(id);
 	}
 
-	public void doModify(int id, String title, String body) {
+	public Article doModify(int id, String title, String body) {
+		
 		articleDao.modifyArticle(id, title, body);
+		return getArticle(id);
 	}
 
 }
