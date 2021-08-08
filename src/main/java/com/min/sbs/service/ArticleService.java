@@ -21,9 +21,35 @@ public class ArticleService {
 	public List<Article> getArticles() {
 		return articleDao.getArticles();
 	}
+	
+	public List<Article> getForPrintArticles(int actorId) {
+		List<Article> articles  = articleDao.getForPrintArticles();
+		
+		for(Article article : articles) {
+			updateForPrintData(actorId, article);
+		}
+		
+		return articles;
+	}
 
 	public Article getArticle(int id) {
 		return articleDao.getArticle(id);
+	}
+	
+	public Article getForPrintArticle(int actorId, int id) {
+		Article article = articleDao.getForPrintArticle(id);
+		
+		updateForPrintData(actorId, article);
+		
+		return article;
+	}
+
+	private void updateForPrintData(int actorId, Article article) {
+		if(article == null) {
+			return;
+		}
+		ResultData actorCanDeleteRd = actorCanDelete(actorId, article);
+		article.setExtra__actorCanDelete(actorCanDeleteRd.isSuccess());
 	}
 
 	public ResultData<Integer> doAdd(int memberId, String title, String body) {
@@ -40,6 +66,30 @@ public class ArticleService {
 		
 		articleDao.modifyArticle(id, title, body);
 		return getArticle(id);
+	}
+	
+	public ResultData actorCanModify(int actorId, Article article) {
+		if ( article == null ) {
+			return ResultData.from("F-1", "게시물이 존재하지 않습니다.");
+		}
+		
+		if ( article.getMemberId() != actorId && actorId != 1 ) {
+			return ResultData.from("F-2", "권한이 없습니다.");
+		}
+		
+		return ResultData.from("S-1", "게시물 수정이 가능합니다.");
+	}
+	
+	public ResultData actorCanDelete(int actorId, Article article) {
+		if ( article == null ) {
+			return ResultData.from("F-1", "게시물이 존재하지 않습니다.");
+		}
+
+		if ( article.getMemberId() != actorId && actorId != 1) {
+			return ResultData.from("F-2", "권한이 없습니다.");
+		}
+
+		return ResultData.from("S-1", "게시물 삭제가 가능합니다.");
 	}
 
 }

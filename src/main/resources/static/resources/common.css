@@ -54,3 +54,12 @@ html body {
 .div-table-type-1 p:first-of-type{
 	border-right: 1px solid gray;
 }
+
+.btn-text-link{
+	padding: 5px;
+	color: skyblue;
+}
+
+.btn-text-link:hover{
+	text-decoration: underline;
+}

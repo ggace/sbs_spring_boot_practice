@@ -15,8 +15,12 @@ import com.min.sbs.dto.Article;
 public interface ArticleDao {
 
 	public List<Article> getArticles();
+	
+	public List<Article> getForPrintArticles();
 
 	public Article getArticle(@Param("id") int id);
+	
+	public Article getForPrintArticle(@Param("id") int id);
 
 	public int getLastArticleId();
 

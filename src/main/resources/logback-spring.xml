@@ -56,6 +56,30 @@
 			<MaxIndex>10</MaxIndex>
 		</rollingPolicy>
 	</appender>
+	
+	<!--파일에 로그를 남깁니다. (Connection) -->
+	<appender name="ConnectionFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/connection/connection.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss} [%-5level] - %msg%n
+			</Pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+
+		<!-- 10MB가 넘어가면 새로운 압축파일이 생성 -->
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>10MB</MaxFileSize>
+		</triggeringPolicy>
+
+		<!-- 파일을 덮어쓰는 정책 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<FileNamePattern>${LOG_PATH}/connection/connection.%i.log.zip
+			</FileNamePattern>
+			<!-- 10MB단위로 로그 압축 파일이 생성된다. (1 ~ 10) 10개가 넘어가면 오래된순으로 덮어쓰기 됩니다. -->
+			<MinIndex>1</MinIndex>
+			<MaxIndex>10</MaxIndex>
+		</rollingPolicy>
+	</appender>
 
 	<!--에러 일 경우 파일에 로그를 남깁니다 -->
 	<appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -89,6 +113,12 @@
 	<logger name="org.apache.ibatis" level="DEBUG" additivity="false">
 		<appender-ref ref="Console" />
 		<appender-ref ref="RollingFile" />
+		<appender-ref ref="Error" />
+	</logger>
+	
+	<logger name="com.min.sbs.interceptor" level="DEBUG">
+		<appender-ref ref="Console" />
+		<appender-ref ref="ConnectionFile" />
 		<appender-ref ref="Error" />
 	</logger>
 

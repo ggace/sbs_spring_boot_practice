@@ -9,6 +9,15 @@
 		<div class="container mx-auto px-3">
 			<div class="table-box-type-1">
 				<table>
+					<colgroup>
+						<col width="50"/>
+						<col width="150"/>
+						<col width="150"/>
+						<col width="150"/>
+						<col />
+					</colgroup>
+					
+					
 					<thread>
 						<tr>
 							<th>번호</th>
@@ -25,14 +34,19 @@
 								<td>${article.id }</td>
 								<td>${article.regDate.substring(2, 16) }</td>
 								<td>${article.updateDate.substring(2, 16) }</td>
-								<td>${article.memberId }</td>
+								<td>${article.extra__writerName }</td>
 								<td>
-									<a href="/usr/article/detail?id=${article.id }">${article.title }</a>
+									<a class="btn-text-link" href="/usr/article/detail?id=${article.id }">${article.title }</a>
 								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+			</div>
+			
+			<div class="mt-2 flex justify-end">
+				
+				<a class="btn-text-link" href="/usr/article/write">글쓰기</a>
 			</div>
 		</div>
 	</section>				
