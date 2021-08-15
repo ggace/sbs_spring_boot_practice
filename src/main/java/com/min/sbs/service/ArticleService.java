@@ -107,7 +107,12 @@ public class ArticleService {
 	}
 
 	public List<Article> getForPrintLimitedArticlesByBoardId(int loginedMemberId, int boardId, int startIndex) {
-		List<Article> articles  = articleDao.getForPrintLimitedArticlesByBoardId(boardId, startIndex);
+		return getForPrintLimitedArticlesByBoardId(loginedMemberId, boardId, startIndex, 10);
+	}
+
+	public List<Article> getForPrintLimitedArticlesByBoardId(int loginedMemberId, int boardId, int startIndex,
+			int limit) {
+		List<Article> articles  = articleDao.getForPrintLimitedArticlesByBoardId(boardId, startIndex, limit);
 		
 		for(Article article : articles) {
 			updateForPrintData(loginedMemberId, article);

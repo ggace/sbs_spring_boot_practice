@@ -32,7 +32,7 @@
 		LEFT JOIN `member` AS M 
 		ON A.memberId = M.id
 		WHERE A.boardId=#{boardId}
-		LIMIT #{startIndex}, 10
+		LIMIT #{startIndex}, #{limit}
 	</select>
 
 	<select id="getArticle" resultType="Article">

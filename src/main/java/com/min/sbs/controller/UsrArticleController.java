@@ -36,7 +36,7 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model, Integer boardId, Integer page) {
+	public String showList(HttpServletRequest req, Model model, Integer boardId, Integer page, Integer limit) {
 		
 		Rq rq = (Rq)req.getAttribute("rq");
 		
@@ -52,8 +52,11 @@ public class UsrArticleController {
 		if(page == null) {
 			page = 1;
 		}
+		if(limit == null) {
+			limit = 10;
+		}
 		
-		int startIndex = (page-1)*10;
+		int startIndex = (page-1)*limit;
 		
 		if(startIndex >= articlesCount) {
 			return rq.historyBackJsOnView("페이지가 존재하지 않습니다.");
@@ -66,15 +69,16 @@ public class UsrArticleController {
 		}
 		
 		
-		List<Article> articles = articleService.getForPrintLimitedArticlesByBoardId(rq.getLoginedMemberId(), boardId, startIndex);
+		List<Article> articles = articleService.getForPrintLimitedArticlesByBoardId(rq.getLoginedMemberId(), boardId, startIndex, limit);
 		
-		int pages = (int)Math.ceil(articlesCount/10.);
+		int pages = (int)Math.ceil(articlesCount/(double)limit);
 		
 		model.addAttribute("articles", articles);
 		model.addAttribute("articlesCount", articlesCount);
 		model.addAttribute("board", board);
 		model.addAttribute("pages", pages);
 		model.addAttribute("currentPage", page);
+		model.addAttribute("limit", limit);
 		return "usr/article/list";
 	}
 

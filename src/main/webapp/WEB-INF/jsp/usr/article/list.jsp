@@ -56,24 +56,24 @@
 				
 			
 				<c:if test="${currentPage != 1 }">
-					<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=1"><<</a>
-					<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=${currentPage-1}"><</a>
+					<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=1&limit=${limit}"><<</a>
+					<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=${currentPage-1}&limit=${limit}"><</a>
 				</c:if>
 				
 				<c:forEach var="i" begin="1" end="${pages }">
 					<c:if test="${i >= currentPage-2 && i <= currentPage+2 && i != currentPage }">
 						
-						<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=${i}">${i }</a>
+						<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=${i}&limit=${limit}">${i }</a>
 					</c:if>
 					<c:if test="${i == currentPage }">
-						<a class="btn btn-ghost btn-xs border" href="/usr/article/list?boardId=${board.id }&page=${i}">${i }</a>
+						<a class="btn btn-ghost btn-xs border" href="/usr/article/list?boardId=${board.id }&page=${i}&limit=${limit}">${i }</a>
 					</c:if>
 					
 				</c:forEach>
 				
 				<c:if test="${currentPage != pages }">
-					<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=${currentPage+1}">></a>
-					<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=${pages}">>></a>
+					<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=${currentPage+1}&limit=${limit}">></a>
+					<a class="btn btn-link btn-xs" href="/usr/article/list?boardId=${board.id }&page=${pages}&limit=${limit}">>></a>
 				</c:if>
 				
 				
