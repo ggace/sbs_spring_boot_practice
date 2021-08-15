@@ -7,23 +7,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.min.sbs.dto.Rq;
-import com.min.sbs.util.Util;
-
-import lombok.extern.log4j.Log4j2;
-
-
-
 
 @Component
-public class BeforeInterceptor implements HandlerInterceptor{
+public class NeedLoginInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		Rq rq = new Rq(request, response);
-		
-		request.setAttribute("rq", rq);
-		
+		Rq rq = (Rq)request.getAttribute("rq");
+		if (!rq.isLogined()) {
+			rq.printHistoryBack("로그인 후 사용해주세요");
+			return false;
+		}
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
 }

@@ -7,16 +7,14 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Article {
+public class Board {
 	private int id;
 	private String regDate;
 	private String updateDate;
-	private int memberId;
-	private String title;
-	private String body;
-	
-	private String extra__writerName;
-	private boolean extra__actorCanDelete;
+	private String code;
+	private String name;
+	private boolean delStatus;
+	private String delDate;
 	
 	public String getRegDateForPrint() {
 		return regDate.substring(2,16);

@@ -15,11 +15,30 @@
 		LEFT JOIN `member` AS M 
 		ON A.memberId = M.id
 	</select>
+	
+	<select id="getForPrintArticlesByBoardId" resultType="Article">
+		SELECT A.*, 
+		M.nickname AS extra__writerName 
+		FROM article AS A 
+		LEFT JOIN `member` AS M 
+		ON A.memberId = M.id
+		WHERE A.boardId=#{boardId}
+	</select>
 
 	<select id="getArticle" resultType="Article">
 		SELECT *
 		FROM article
 		WHERE id=#{id}
+	</select>
+	
+	<select id="getArticlesCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM article AS A
+		WHERE 1
+		<if test="boardId != 0">
+			AND A.boardId = #{boardId}
+		</if>
+		
 	</select>
 	
 	<select id="getForPrintArticle" resultType="Article">

@@ -14,12 +14,12 @@
 				
 				<div class="flex">
 					<p>작성날짜</p>
-					<p class="break-all">${article.regDate.substring(2,16)}</p>
+					<p class="break-all">${article.regDateForPrint}</p>
 				</div>
 				
 				<div class="flex">
 					<p>수정날짜</p>
-					<p class="break-all">${article.updateDate.substring(2,16)}</p>
+					<p class="break-all">${article.updateDateForPrint}</p>
 				</div>
 				
 				<div class="flex">
@@ -32,11 +32,11 @@
 				</div>					
 			</div>
 			<div class="flex mt-1">
-				<button class="btn-text-link" onclick="history.back()">뒤로가기</button>
+				<button class="btn btn-link btn-sm" onclick="history.back()">뒤로가기</button>
 				<div class="flex flex-grow"></div>
 				<c:if test="${article.extra__actorCanDelete }">
-					<a class="btn-text-link" href="/usr/article/modify?id=${article.id }">수정</a>
-					<a onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) return false;" class="btn-text-link bg-red-500 border border-gray-400 border rounded-lg" href="/usr/article/doDelete?id=${article.id }">삭제</a>
+					<a class="btn btn-ghost btn-outline btn-sm m-1" href="/usr/article/modify?id=${article.id }">수정</a>
+					<a onclick="if ( confirm('정말 삭제하시겠습니까?') == false ) return false;" class="btn btn-secondary btn-sm m-1 " href="/usr/article/doDelete?id=${article.id }">삭제</a>
 				</c:if>
 			</div>
 		</div>

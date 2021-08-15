@@ -1,5 +1,6 @@
 package com.min.sbs.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -8,14 +9,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.sbs.dto.Member;
 import com.min.sbs.dto.ResultData;
+import com.min.sbs.dto.Rq;
 import com.min.sbs.service.MemberService;
 import com.min.sbs.util.Util;
 
 @Controller
-public class UsrMemeberController {
+public class UsrMemberController {
 	private MemberService memberService;
 
-	public UsrMemeberController(MemberService memberService) {
+	public UsrMemberController(MemberService memberService) {
 		this.memberService = memberService;
 	}
 
@@ -56,49 +58,51 @@ public class UsrMemeberController {
 		return ResultData.newData(joinRd, "member", member);
 	}
 
+	@RequestMapping("/usr/member/showLogin")
+	public String showLogin() {
+		return "/usr/member/login";
+	}
+	
 	@RequestMapping("/usr/member/doLogin")
 	@ResponseBody
-	public ResultData<Integer> doLogin(String loginId, String loginPw, HttpSession session) {
+	public String doLogin(String loginId, String loginPw, HttpServletRequest request) {
 
-		boolean isLogin = false;
+		Rq rq = (Rq)request.getAttribute("rq");
 
-		if (session.getAttribute("loginedMemberId") != null) {
-			isLogin = true;
-		}
-
-		if (isLogin) {
-			return ResultData.from("F-a", "이미 로그인 상태입니다.");
+		if (rq.isLogined()) {
+			return Util.jsHistoryBack("이미 로그인 상태입니다.");
 		}
 
 		if (Util.isEmpty(loginId)) {
-			return ResultData.from("F-A", "loginId를 입력해주세요");
+			return Util.jsHistoryBack("loginId를 입력해주세요");
 		}
 		if (Util.isEmpty(loginPw)) {
-			return ResultData.from("F-B", "loginPw를 입력해주세요");
+			return Util.jsHistoryBack("loginPw를 입력해주세요");
 		}
 
 		Member member = memberService.getMemberByLoginId(loginId);
 
 		if (member == null) {
-			session.setAttribute("loginedMemberId", null);
-			return ResultData.from("F-1", "해당 회원이 존재하지 않습니다.");
+			return Util.jsHistoryBack("해당 회원이 존재하지 않습니다.");
 		}
 		if (!(member.getLoginPw().equals(loginPw))) {
-			session.setAttribute("loginedMemberId", null);
-			return ResultData.from("F-2", "비밀번호가 일치하지 않습니다.");
+			return Util.jsHistoryBack("비밀번호가 일치하지 않습니다.");
 		}
 
-		session.setAttribute("loginedMemberId", member.getId());
-		return ResultData.from("S-1", Util.format("%s님 환영합니다.", loginId), "id", member.getId());
+		rq.login(member);
+		return Util.jsReplace(Util.format("%s님 환영합니다.", loginId), "/usr/home/main");
 	}
 
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
-	public ResultData doLogout(HttpSession session) {
-		if (session.getAttribute("loginedMemberId") == null) {
-			return ResultData.from("F-a", "현재 로그인 되어 있지 않습니다.");
+	public String doLogout(HttpServletRequest request) {
+		
+		Rq rq = (Rq)request.getAttribute("rq");
+		
+		if (!rq.isLogined()) {
+			return Util.jsHistoryBack("현재 로그인 되어 있지 않습니다.");
 		}
-		session.removeAttribute("loginedMemberId");
-		return ResultData.from("S-1", "로그아웃되었습니다.");
+		rq.logout();
+		return Util.jsReplace("로그아웃되었습니다.", "/usr/home/main");
 	}
 }

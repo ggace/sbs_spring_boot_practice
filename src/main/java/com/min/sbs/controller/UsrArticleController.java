@@ -11,17 +11,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.min.sbs.dto.Article;
+import com.min.sbs.dto.Board;
 import com.min.sbs.dto.ResultData;
 import com.min.sbs.dto.Rq;
 import com.min.sbs.service.ArticleService;
+import com.min.sbs.service.BoardService;
 import com.min.sbs.util.Util;
 
 @Controller
 public class UsrArticleController {
 	private ArticleService articleService;
+	private BoardService boardService;
 
-	public UsrArticleController(ArticleService articleService) {
+	public UsrArticleController(ArticleService articleService, BoardService boardService) {
 		this.articleService = articleService;
+		this.boardService = boardService;
 	}
 	
 	@RequestMapping("/usr/article/getArticles")
@@ -32,13 +36,28 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model) {
+	public String showList(HttpServletRequest req, Model model, Integer boardId) {
 		
-		Rq rq = new Rq(req);
+		Rq rq = (Rq)req.getAttribute("rq");
 		
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
+		if(boardId == null) {
+			return rq.historyBackJsOnView("boardId를 입력해주세요"); 
+		}
+		
+		Board board = boardService.getBoardById(boardId);
+		
+		if(board == null) {
+			return rq.historyBackJsOnView("해당 게시판이 존재하지 않습니다.");
+		}
+		
+		int articlesCount = articleService.getArticlesCount(boardId);
+		List<Article> articles = articleService.getForPrintArticlesByBoardId(rq.getLoginedMemberId(), boardId);
+		
+		
 		
 		model.addAttribute("articles", articles);
+		model.addAttribute("articlesCount", articlesCount);
+		model.addAttribute("board", board);
 		return "usr/article/list";
 	}
 
@@ -62,7 +81,7 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/detail")
 	public String showDetail(Integer id, Model model, HttpServletRequest req) {
 		
-		Rq rq = new Rq(req);
+		Rq rq = (Rq)req.getAttribute("rq");
 
 		if (id == null) {
 			model.addAttribute("errors", "id를 입력해주세요");
@@ -85,12 +104,8 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public String doAdd(String title, String body, HttpServletRequest req) {
-		Rq rq = new Rq(req);
+		Rq rq = (Rq)req.getAttribute("rq");
 		
-		if (!rq.isLogined()) {
-			return Util.jsHistoryBack("로그인 후 사용해주세요");
-		}
-
 		if (Util.isEmpty(title)) {
 			return Util.jsHistoryBack("title를 입력해주세요");
 		}
@@ -107,11 +122,8 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(Integer id, HttpServletRequest req) {
-		Rq rq = new Rq(req);
-		if (!rq.isLogined()) {
-			return Util.jsHistoryBack("로그인 후 사용해주세요");
-		}
-
+		Rq rq = (Rq)req.getAttribute("rq");
+		
 		if (id == null) {
 			return Util.jsHistoryBack("id를 입력해주세요");
 		}
@@ -134,8 +146,19 @@ public class UsrArticleController {
 	}
 	
 	@RequestMapping("/usr/article/modify")
-	public String modify(Integer id, Model model) {
+	public String modify(Integer id, HttpServletRequest request, Model model) {
+		
+		Rq rq = (Rq)request.getAttribute("rq");
+		
+		if (id == null) {
+			return rq.historyBackJsOnView("id를 입력해주세요");
+		}
+		
 		Article article = articleService.getArticle(id);
+		
+		if (article == null) {
+			return rq.historyBackJsOnView(Util.format("%d번 게시물이 존재하지 않습니다.", id));
+		}
 		
 		model.addAttribute("article", article);
 		
@@ -145,11 +168,8 @@ public class UsrArticleController {
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
 	public String doModify(Integer id, String title, String body, HttpServletRequest req) {
-		Rq rq = new Rq(req);
-		if (!rq.isLogined()) {
-			return Util.jsHistoryBack("로그인 후 사용해주세요");
-		}
-
+		Rq rq = (Rq)req.getAttribute("rq");
+		
 		if (id == null) {
 			return Util.jsHistoryBack("id를 입력해주세요");
 		}

@@ -8,12 +8,12 @@
 		<div class="container mx-auto px-3">
 			<div>
 				<form class="flex flex-col" action="/usr/article/doAdd">
-					<input name="title" class="my-2 p-2" type="text" placeholder="제목를 입력해주세요" />
+					<input name="title" class="my-2 p-2 input input-bordered" type="text" placeholder="제목를 입력해주세요" />
 			
-					<textarea name="body" class="my-2 p-2" name="" id="" cols="30" rows="10" placeholder="내용을 입력해주세요"></textarea>
+					<textarea name="body" class="my-2 p-2 textarea textarea-bordered" name="" id="" cols="30" rows="10" placeholder="내용을 입력해주세요"></textarea>
 					
-					<input class="my-1 p-2 active:bg-gray-300" type="submit" value="글쓰기"/>
-					<input class="my-1 p-2 border border-gray bg-white active:bg-gray-200" type="reset" onclick="history.back()" value="취소"/>
+					<input class="my-1 p-2 btn btn-primary" type="submit" value="글쓰기"/>
+					<input class="my-1 p-2 btn btn-outline" type="reset" onclick="history.back()" value="취소"/>
 				</form>
 				
 			</div>

@@ -2,11 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="게시물 리스트 페이지" />
+<c:set var="pageTitle" value="${board.name } 게시물 페이지" />
 <%@include file="../common/header.jspf" %>
 <main>
 	<section class="mt-5">
 		<div class="container mx-auto px-3">
+			<div>
+				게시물 개수 : ${articlesCount }개
+			</div>
 			<div class="table-box-type-1">
 				<table>
 					<colgroup>
@@ -32,11 +35,11 @@
 						<c:forEach var="article" items="${articles}">
 							<tr>
 								<td>${article.id }</td>
-								<td>${article.regDate.substring(2, 16) }</td>
-								<td>${article.updateDate.substring(2, 16) }</td>
+								<td>${article.regDateForPrint }</td>
+								<td>${article.updateDateForPrint }</td>
 								<td>${article.extra__writerName }</td>
 								<td>
-									<a class="btn-text-link" href="/usr/article/detail?id=${article.id }">${article.title }</a>
+									<a class="btn btn-link btn-sm" href="/usr/article/detail?id=${article.id }">${article.title }</a>
 								</td>
 							</tr>
 						</c:forEach>
@@ -46,7 +49,7 @@
 			
 			<div class="mt-2 flex justify-end">
 				
-				<a class="btn-text-link" href="/usr/article/write">글쓰기</a>
+				<a class="btn btn-link btn-sm" href="/usr/article/write">글쓰기</a>
 			</div>
 		</div>
 	</section>				

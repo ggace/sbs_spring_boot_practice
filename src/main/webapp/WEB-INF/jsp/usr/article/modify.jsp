@@ -9,12 +9,12 @@
 			<div>
 				<form class="flex flex-col" action="/usr/article/doModify">
 					<input type="hidden" name="id" value="<%=request.getParameter("id") %>"/>
-					<input name="title" class="my-2 p-2" type="text" placeholder="제목를 입력해주세요" value="${article.title }" />
+					<input name="title" class="my-2 p-2 input input-bordered" type="text" placeholder="제목를 입력해주세요" value="${article.title }" />
 			
-					<textarea name="body" class="my-2 p-2" name="" id="" cols="30" rows="10" placeholder="내용을 입력해주세요">${article.body }</textarea>
+					<textarea name="body" class="my-2 p-2 textarea textarea-bordered" name="" id="" cols="30" rows="10" placeholder="내용을 입력해주세요">${article.body }</textarea>
 					
-					<input class="my-1 p-2 active:bg-gray-300" type="submit" value="수정"/>
-					<input class="my-1 p-2 border border-gray bg-white active:bg-gray-200" type="reset" onclick="history.back()" value="취소"/>
+					<input class="my-1 p-2 btn btn-primary" type="submit" value="수정"/>
+					<input class="my-1 p-2 btn btn-outline" type="reset" onclick="history.back()" value="취소"/>
 				</form>
 				
 			</div>

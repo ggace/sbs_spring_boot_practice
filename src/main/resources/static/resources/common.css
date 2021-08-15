@@ -1,4 +1,7 @@
 @charset "UTF-8";
+body {
+	min-width: 800px;	
+}
 
 @font-face {
   font-family: 'LotteMartDream';
@@ -57,9 +60,26 @@ html body {
 
 .btn-text-link{
 	padding: 5px;
-	color: skyblue;
+	color: #808080;
 }
 
 .btn-text-link:hover{
 	text-decoration: underline;
+}
+
+.nav li:hover {
+	background-color: #dddddd;
+}
+
+.dropdown {
+	display: none;
+}
+
+.dropdown li {
+	font-size: 15px;
+	background-color: #eeeeee;
+}
+
+.nav li:hover .dropdown {
+	display: inline
 }

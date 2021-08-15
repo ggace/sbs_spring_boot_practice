@@ -92,4 +92,18 @@ public class ArticleService {
 		return ResultData.from("S-1", "게시물 삭제가 가능합니다.");
 	}
 
+	public List<Article> getForPrintArticlesByBoardId(int loginedMemberId, int boardId) {
+		List<Article> articles  = articleDao.getForPrintArticlesByBoardId(boardId);
+		
+		for(Article article : articles) {
+			updateForPrintData(loginedMemberId, article);
+		}
+		
+		return articles;
+	}
+
+	public int getArticlesCount(int boardId) {
+		return articleDao.getArticlesCount(boardId);
+	}
+
 }

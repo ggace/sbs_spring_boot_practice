@@ -30,4 +30,8 @@ public interface ArticleDao {
 
 	public void modifyArticle(@Param("id") int id, @Param("title") String title, @Param("body") String body);
 
+	public List<Article> getForPrintArticlesByBoardId(@Param("boardId") int boardId);
+
+	public int getArticlesCount(@Param("boardId") int boardId);
+
 }

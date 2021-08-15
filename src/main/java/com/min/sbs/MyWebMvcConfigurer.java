@@ -6,14 +6,40 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.min.sbs.interceptor.BeforeInterceptor;
+import com.min.sbs.interceptor.ConnectingInterceptor;
+import com.min.sbs.interceptor.NeedLoginInterceptor;
 
 @Configuration
 public class MyWebMvcConfigurer implements WebMvcConfigurer{
 	@Autowired
 	BeforeInterceptor beforeInterceptor = new BeforeInterceptor();
+	@Autowired
+	ConnectingInterceptor connectingInterceptor = new ConnectingInterceptor();
+	
+	@Autowired
+	NeedLoginInterceptor needLoginInterceptor = new NeedLoginInterceptor();
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(beforeInterceptor).addPathPatterns("/**").excludePathPatterns("/resources/**").excludePathPatterns("/error");
+		
+		registry.addInterceptor(connectingInterceptor)
+		.addPathPatterns("/**")
+		.excludePathPatterns("/resources/**")
+		.excludePathPatterns("/error");
+		
+		registry.addInterceptor(beforeInterceptor)
+		.addPathPatterns("/**")
+		.excludePathPatterns("/resources/**")
+		.excludePathPatterns("/error");
+		
+		registry.addInterceptor(needLoginInterceptor)
+		.addPathPatterns("/usr/article/write")
+		.addPathPatterns("/usr/article/doDelete")
+		.addPathPatterns("/usr/article/doAdd")
+		.addPathPatterns("/usr/article/modify")
+		.addPathPatterns("/usr/article/doModify");
+		
+		
+		
 	}
 }
