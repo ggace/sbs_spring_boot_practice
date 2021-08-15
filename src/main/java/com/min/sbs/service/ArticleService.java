@@ -106,4 +106,14 @@ public class ArticleService {
 		return articleDao.getArticlesCount(boardId);
 	}
 
+	public List<Article> getForPrintLimitedArticlesByBoardId(int loginedMemberId, int boardId, int startIndex) {
+		List<Article> articles  = articleDao.getForPrintLimitedArticlesByBoardId(boardId, startIndex);
+		
+		for(Article article : articles) {
+			updateForPrintData(loginedMemberId, article);
+		}
+		
+		return articles;
+	}
+
 }
