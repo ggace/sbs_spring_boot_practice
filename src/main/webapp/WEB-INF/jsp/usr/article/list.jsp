@@ -7,9 +7,24 @@
 <main>
 	<section class="mt-5">
 		<div class="container mx-auto px-3">
-			<div>
+			<div class="flex ">
 				게시물 개수 : ${articlesCount }개
+				<div class="flex flex-grow"></div>
+				<div>
+					<form action="" class="flex w-full">
+						<input type="hidden" name="boardId" value="${board.id }"/>
+						<select class="select select-bordered select-sm m-1 max-w-xs w-full" name="limit" value="10">
+							<option onclick="location.replace('http://localhost:8012/usr/article/list?boardId=${board.id}&page=${page }&limit=5')" value="5">5</option>
+							<option onclick="location.replace('http://localhost:8012/usr/article/list?boardId=${board.id}&page=${page }&limit=10')"  value="10">10</option>
+							<option onclick="location.replace('http://localhost:8012/usr/article/list?boardId=${board.id}&page=${page }&limit=15')"  value="15">15</option>
+							<option onclick="location.replace('http://localhost:8012/usr/article/list?boardId=${board.id}&page=${page }&limit=20')"  value="20">20</option>
+						</select>
+						
+					</form>
+					
+				</div>
 			</div>
+			
 			<div class="table-box-type-1">
 				<table>
 					<colgroup>
