@@ -4,26 +4,34 @@
 
 <c:set var="pageTitle" value="${board.name } 게시물 페이지" />
 <%@include file="../common/header.jspf" %>
+
+
+
 <main>
 	<section class="mt-5">
-		<div class="container mx-auto px-3">
-			<div class="flex ">
-				게시물 개수 : ${articlesCount }개
-				<div class="flex flex-grow"></div>
-				<div>
-					<form action="" class="flex w-full">
-						<input type="hidden" name="boardId" value="${board.id }"/>
-						<select class="select select-bordered select-sm m-1 max-w-xs w-full" name="limit" value="10">
-							<option onclick="location.replace('http://localhost:8012/usr/article/list?boardId=${board.id}&page=${page }&limit=5')" value="5">5</option>
-							<option onclick="location.replace('http://localhost:8012/usr/article/list?boardId=${board.id}&page=${page }&limit=10')"  value="10">10</option>
-							<option onclick="location.replace('http://localhost:8012/usr/article/list?boardId=${board.id}&page=${page }&limit=15')"  value="15">15</option>
-							<option onclick="location.replace('http://localhost:8012/usr/article/list?boardId=${board.id}&page=${page }&limit=20')"  value="20">20</option>
-						</select>
-						
-					</form>
+		<div class="flex mx-auto container px-3">
+			게시물 개수 : ${articlesCount }개
+			<div class="flex flex-grow"></div>
+			<div>
+				<form action="" class="flex w-full">
 					
-				</div>
+					<select id="limitSelect" class="select select-bordered m-1 max-w-xs select-sm w-20" onchange="changeLimit(value)" name="limit" value="10">
+						<option value="">선택</option>
+						<option id="5" value="5">5</option>
+						<option id="10" value="10">10</option>
+						<option id="15" value="15">15</option>
+						<option id="20" value="20">20</option>
+					</select>
+					
+					
+				</form>
+				
 			</div>
+		</div>
+	</section>
+	<section class="mt-3">
+		<div class="container mx-auto px-3">
+			
 			
 			<div class="table-box-type-1">
 				<table>
@@ -96,7 +104,11 @@
 		</div>
 	</section>				
 </main>
-
+<script>
+	function changeLimit(value){
+		location.replace('/usr/article/list?boardId=${board.id}&page=${currentPage}&limit=' + value)
+	}
+</script>
 	
 	
 <%@include file="../common/foot.jspf" %>
