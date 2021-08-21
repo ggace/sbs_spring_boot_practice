@@ -115,6 +115,6 @@ boardId=2,
 title = '제목 3',
 `body` = '내용 3';
 
-SELECT * FROM `member`
-SELECT * FROM article
+SELECT * FROM `member`;
+SELECT * FROM article;
 SELECT * FROM board;
